@@ -21,6 +21,8 @@ class View(ft.UserControl):
         self.btnPrintIscrittiCodins = None
         self.btnPrintCDSCodins = None
 
+        self.txt_result = None
+
 
     def load_interface(self):
         # title
@@ -38,7 +40,7 @@ class View(ft.UserControl):
                                                  on_click=self._controller.handlePrintIscrittiCorsiPD,
                                                  width=300)
 
-        row1 = ft.Row([self.ddPD, self.btnPrintCorsiPD, self.btnPrintIscrittiCorsiPD])
+        row1 = ft.Row([self.ddPD, self.btnPrintCorsiPD, self.btnPrintIscrittiCorsiPD], alignment=ft.MainAxisAlignment.CENTER)
 
         self.ddCodins = ft.Dropdown(label = "Corso", width=200)
         self._controller.fillddCodins()
@@ -49,7 +51,7 @@ class View(ft.UserControl):
                                                    on_click = self._controller.handlePrintCDSCodins,
                                                  width=300)
 
-        row2 = ft.Row([self.ddCodins, self.btnPrintIscrittiCodins, self.btnPrintCDSCodins])
+        row2 = ft.Row([self.ddCodins, self.btnPrintIscrittiCodins, self.btnPrintCDSCodins], alignment=ft.MainAxisAlignment.CENTER)
         self._page.add(row1, row2)
 
         # List View where the reply is printed
