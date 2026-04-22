@@ -1,5 +1,4 @@
 import flet as ft
-
 from model.model import Model
 
 
@@ -9,9 +8,11 @@ class Controller:
         self._view = view
         # the model, which implements the logic of the program and holds the data
         self._model = Model()
+
         self._ddCodinsValue = None
 
-    def handlePrintCorsiPD(self, e):
+    # 4. SCRIVO I METODI CHE CHIAMO NELLA VIEW
+    def handlePrintCorsiPD(self, e): # inserisco sempre l'evento, è lo schiacciare del pulsante
         self._view.txt_result.controls.clear()
 
         pd = self._view.ddPD.value
@@ -41,6 +42,7 @@ class Controller:
                 ft.Text(c)
             )
         self._view.update_page()
+
 
     def handlePrintIscrittiCorsiPD(self, e):
         self._view.txt_result.controls.clear()
@@ -74,6 +76,7 @@ class Controller:
             )
         self._view.update_page()
 
+
     def handlePrintIscrittiCodins(self, e):
         self._view.txt_result.controls.clear()
 
@@ -101,7 +104,6 @@ class Controller:
         self._view.update_page()
 
 
-
     def handlePrintCDSCodins(self, e):
         self._view.txt_result.controls.clear()
         if self._ddCodinsValue is None:
@@ -124,20 +126,18 @@ class Controller:
             self._view.txt_result.controls.append(ft.Text(f"{c[0]} - N Iscritti: {c[1]}"))
         self._view.update_page()
 
-    def fillddCodins(self):
-        # for cod in self._model.getCodins():
-        #     self._view.ddCodins.options.append(
-        #         ft.dropdown.Option(cod)
-        #     )
 
+    def fillddCodins(self): # riempe il drop down di cui devo prendere i dati dal db
         for c in self._model.getAllCorsi():
-            self._view.ddCodins.options.append(ft.dropdown.Option(
-                key = c.codins,
-                data = c,
-                on_click = self._choiceDDCodins
+            self._view.ddCodins.options.append(ft.dropdown.Option( # aggiunge al drop down
+                key = c.codins, # stringa visualizzata nel menu
+                data = c, # a cui associo l'oggetto corso
+                on_click = self._choiceDDCodins # attivato quando seleziono l'oggetto, per salvare nel controller
+                # la voce selezionata
             ))
-            pass
 
-    def _choiceDDCodins(self, e):
-        self._ddCodinsValue = e.control.data
+
+    def _choiceDDCodins(self, e): # metodo del controller che associo alla selezione della voce
+        self._ddCodinsValue = e.control.data # legge la selezione dell'utente e la salva in una variabile locale,
+        # prende l'oggetto di tipo corso selezionato
         print(self._ddCodinsValue)

@@ -5,47 +5,43 @@ from model.studente import Studente
 
 class DAO():
 
+    # 6. PRENDO I CODICI INSEGNAMENTO AL DB FACENDO UNA QUERY, SARA' SEMPRE UGUALE, CAMBIA SOLO LA QUERY
     @staticmethod
     def getCodins():
-        cnx = DBConnect.get_connection()
-        cursor = cnx.cursor(dictionary=True)
-
-        query = """select codins
-                    FROM corso"""
-
-        cursor.execute(query)
+        cnx = DBConnect.get_connection() # chiede una connessione
+        cursor = cnx.cursor(dictionary=True) # crea un cursore
+        query = """select codins 
+                    FROM corso""" # fa la query
+        cursor.execute(query) # la eseguo
 
         res = []
-        for row in cursor:
-            res.append(row["codins"])
+        for row in cursor: # ciclo sul cursore per leggere i dati
+            res.append(row["codins"]) # metto i dati in una lista, prendo la colonna codins delle righe
 
+        cursor.close() # chiudo il cursore
+        cnx.close() # restituiamo la connessione
+        return res # restituisce una lista di stringhe con gli insegnamenti che aggiungerà nelle opzioni
 
-        cursor.close()
-        cnx.close()
-        return res
 
     @staticmethod
-    def getAllCorsi():
+    def getAllCorsi(): # fa una copia di quello prima e lo modifica
         cnx = DBConnect.get_connection()
         cursor = cnx.cursor(dictionary=True)
-
-        query = """select * FROM corso"""
-
+        query = """select * FROM corso""" # leggo tutto il corso
         cursor.execute(query)
 
         res = []
         for row in cursor:
-            res.append(Corso(
-                codins = row["codins"],
+            res.append(Corso( # appendo l'oggetto corso da creare in model
+                codins = row["codins"], # row è un dizionario
                 crediti = row["crediti"],
                 nome = row["nome"],
                 pd = row["pd"]
             ))
 
-
         cursor.close()
         cnx.close()
-        return res
+        return res # restituisco una lista di oggetti di tipo corso
 
     @staticmethod
     def getCorsiPD(pd):
