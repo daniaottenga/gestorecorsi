@@ -50,13 +50,14 @@ class DAO():
 
         query = """SELECT *
                     FROM corso c
-                    WHERE c.pd = %s"""
+                    WHERE c.pd = %s""" # %s è per dire che è un parametro
 
         cursor.execute(query, (pd,))
 
         res = []
         for row in cursor:
-            res.append(Corso(**row))
+            res.append(Corso(**row)) # lo faccio quando la chiave del dizionario ha lo stesso nome della
+            # proprietà dell'oggetto, fa l'unpack del dizionario
 
         cursor.close()
         cnx.close()
@@ -77,11 +78,11 @@ class DAO():
 
         res = []
         for row in cursor:
-            res.append( (Corso(codins = row["codins"],
-                                crediti = row["crediti"],
-                                nome = row["nome"],
-                                pd = row["pd"]),
-                         row["n"] ))
+            res.append((Corso(codins = row["codins"],
+                              crediti = row["crediti"],
+                              nome = row["nome"],
+                              pd = row["pd"]),
+                        row["n"] ))
 
         cursor.close()
         cnx.close()

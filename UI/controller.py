@@ -18,14 +18,15 @@ class Controller:
         pd = self._view.ddPD.value
 
         if pd is None:
-            (self._view.create_alert
-             ("Attenzione, selezionare un periodo didattico."))
+            self._view.create_alert("Attenzione, selezionare un periodo didattico.") # crea complessità,
+            # valutare se usarlo
             self._view.update_page()
             return
 
         if pd == "I":
             pdInt = 1
-        else: pdInt = 2
+        else:
+            pdInt = 2
 
         corsiPD = self._model.getCorsiPD(pdInt)
 

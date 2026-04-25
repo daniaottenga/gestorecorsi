@@ -20,7 +20,7 @@ class Model:
 
     def getCorsiPDwIscritti(self, pd):
         result = DAO.getCorsiPDwIscritti(pd)
-        result.sort(key= lambda s: s[1], reverse=True)
+        result.sort(key= lambda s: s[1], reverse=True) # ordinato per numero di iscritti
         return result
 
 
